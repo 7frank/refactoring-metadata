@@ -45,18 +45,36 @@ const makePlugin = (utils: PluginUtils) => {
         //const program = ts.createProgram([entryModule], compilerOptions, compilerHost)
         const msgs = {};
 
+        const types = [];
+        function foundTypes(node: any) {
+          const type = program.getTypeChecker().getTypeAtLocation(node);
+
+          types.push(type);
+
+          window["types"] = types;
+
+          // @ts-ignore
+          let typeSignature = sandbox.ts.displayPartsToString(sandbox.ts.typeToDisplayParts(checker, type)).replace(/\s+/g, ' ');
+          console.log("typeSignature",typeSignature)
+
+        }
+
         const emitResult = program.emit(
           undefined,
           undefined,
           undefined,
           undefined,
           {
-            before: [myTransformFactory(sandbox.ts)],
+            before: [myTransformFactory(sandbox.ts, foundTypes)],
           }
         );
 
         console.log(msgs);
-        sandbox.setText(sandbox.getText() + JSON.stringify(msgs, null, "  "));
+        sandbox.setText(
+          sandbox.getText() + JSON.stringify(msgs, null, "  ")
+          // +
+          // JSON.stringify(types, null, "  ")
+        );
       };
     },
 
