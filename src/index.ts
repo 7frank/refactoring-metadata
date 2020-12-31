@@ -46,17 +46,45 @@ const makePlugin = (utils: PluginUtils) => {
         const msgs = {};
 
         const types = [];
-        function foundTypes(node: any) {
-          const type = program.getTypeChecker().getTypeAtLocation(node);
+        function foundTypes(node: any, info?: string) {
+          try {
+            console.log("");
+            info && console.log(info);
 
-          types.push(type);
+            const type = program.getTypeChecker().getTypeAtLocation(node);
 
-          window["types"] = types;
+            types.push(type);
 
+            window["types"] = types;
+
+            console.log("node", node);
+
+            let typeSignature = sandbox.ts
+              .displayPartsToString(
+                // @ts-ignore
+                sandbox.ts.typeToDisplayParts(checker, type, node)
+              )
+              .replace(/\s+/g, " ");
+            console.log("typeSignature", typeSignature);
+
+            // Full name
+            // const sym=type.getSymbol()
+            // console.log(
+            //   `Name: ${checker.getFullyQualifiedName(sym)}  ${sym.escapedName}`
+            // );
+            // Get the declarations (can be multiple), and print them
+            console.log(`Declarations: `);
+            type
+              .getSymbol()
+              .getDeclarations()
+              .forEach((d) => console.log(d.getText()));
+          } catch (e) {}
+
+          //const signatures = checker.getSignaturesOfType(type);
+          //console.log("signatures",signatures)
           // @ts-ignore
-          let typeSignature = sandbox.ts.displayPartsToString(sandbox.ts.typeToDisplayParts(checker, type)).replace(/\s+/g, ' ');
-          console.log("typeSignature",typeSignature)
-
+          // let typeSignature2 = sandbox.ts.displayPartsToString(sandbox.ts.signatureToDisplayParts(checker, signatures,node)).replace(/\s+/g, ' ');
+          // console.log("typeSignature2",typeSignature2)
         }
 
         const emitResult = program.emit(
