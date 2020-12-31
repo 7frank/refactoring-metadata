@@ -1,6 +1,5 @@
-import { myTransform } from "./myTransform";
+import { myTransformFactory } from "./myTransform";
 import type { PlaygroundPlugin, PluginUtils } from "./vendor/playground";
-
 
 const makePlugin = (utils: PluginUtils) => {
   const customPlugin: PlaygroundPlugin = {
@@ -25,7 +24,6 @@ const makePlugin = (utils: PluginUtils) => {
 
       startButton.onclick = () => {
         sandbox.setText("// You clicked the button!");
-       // sandbox.getText()
       };
 
       const inferButton = document.createElement("input");
@@ -41,9 +39,6 @@ const makePlugin = (utils: PluginUtils) => {
         let sourceFile = program.getSourceFile(sandbox.filepath);
         let options = sandbox.getCompilerOptions();
 
-    
-   
-
         // create compiler host, program, and then emit the results
         // using our transform
         //const compilerHost = ts.createCompilerHost({})
@@ -56,16 +51,12 @@ const makePlugin = (utils: PluginUtils) => {
           undefined,
           undefined,
           {
-            before: [
-              myTransform
-            ],
+            before: [myTransformFactory(sandbox.ts)],
           }
         );
 
-        console.log(msgs)
-        sandbox.setText(sandbox.getText()+JSON.stringify(msgs,null,'  '));
-        
-
+        console.log(msgs);
+        sandbox.setText(sandbox.getText() + JSON.stringify(msgs, null, "  "));
       };
     },
 
