@@ -29,10 +29,12 @@
     "monaco-editor": "^0.19.3",
     "node-fetch": "^2.6.0",
     "rollup": "^1.31.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
     "serve": "^11.3.0",
     "typescript": "latest"
   },
   "dependencies": {
-    "tslib": "^1.10.0"
+    "tslib": "^1.10.0",
+    "tsx-ray": "^0.1.8"
   }
 }

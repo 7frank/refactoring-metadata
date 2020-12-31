@@ -1,0 +1,31 @@
+{
+  Props: { test1: 'string' },
+  TestFunctionsInterface: {
+    getProps: 'typeof getProps',
+    Button: 'typeof import("/home/frank/playground-my-plugin/src/Button").Button'
+  },
+  Attendee: {
+    id: 'string',
+    status: [ 'beginner', 'experienced', 'pro' ],
+    accessLv: [ 1, 2, 3 ],
+    person: {
+      name: 'string',
+      isUnderage: 'boolean',
+      phoneNumbers: [Array],
+      address: [Object]
+    },
+    accompaniedBy: {
+      name: 'string',
+      isUnderage: 'boolean',
+      phoneNumbers: [Array],
+      address: [Object]
+    }
+  },
+  Person: {
+    name: 'string',
+    isUnderage: 'boolean',
+    phoneNumbers: [ 'string' ],
+    address: { city: [Array], country: 'string' }
+  },
+  Address: { city: [ 'string', 'number' ], country: 'string' }
+}

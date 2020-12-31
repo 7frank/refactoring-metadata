@@ -1,5 +1,11 @@
+// https://stackoverflow.com/a/36414658
+// https://stackoverflow.com/a/50528136
+
 import { myTransformFactory } from "./myTransform";
 import type { PlaygroundPlugin, PluginUtils } from "./vendor/playground";
+import { extractInterfacesFromFile } from 'tsx-ray';
+
+
 
 const makePlugin = (utils: PluginUtils) => {
   const customPlugin: PlaygroundPlugin = {
@@ -98,11 +104,11 @@ const makePlugin = (utils: PluginUtils) => {
         );
 
         console.log(msgs);
-        sandbox.setText(
-          sandbox.getText() + JSON.stringify(msgs, null, "  ")
-          // +
-          // JSON.stringify(types, null, "  ")
-        );
+        // sandbox.setText(
+        //   sandbox.getText() + JSON.stringify(msgs, null, "  ")
+        //   // +
+        //   // JSON.stringify(types, null, "  ")
+        // );
       };
     },
 
