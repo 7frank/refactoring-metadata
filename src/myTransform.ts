@@ -6,24 +6,31 @@ export const myTransformFactory = (
 ) => {
   const myTransform: ts.TransformerFactory<ts.SourceFile> = (context) => {
     return (sourceFile) => {
+      const functionVisitor = (node: ts.Node): ts.Node => {
+        if (ts.isTypeReferenceNode(node)) {
+          cb(node, "typereference");
+          // console.log("found",node)
+        }
+        return ts.visitEachChild(node, functionVisitor, context);
+      };
+
       const visitor = (node: ts.Node): ts.Node => {
-       
-    //    cb(node)
+        //    cb(node)
 
         // if (ts.isIdentifier(node)) {
         //   cb(node);
         //  // console.log("found",node)
         // }
 
-       if (ts.isTypeReferenceNode(node)) {
-          cb(node,"typereference");
-         // console.log("found",node)
-        }
+        //  if (ts.isTypeReferenceNode(node)) {
+        //     cb(node,"typereference");
+        //    // console.log("found",node)
+        //   }
 
-       
         if (ts.isFunctionDeclaration(node)) {
-          cb(node,"functiondeclaration");
-         // console.log("found",node)
+          cb(node, "functiondeclaration");
+
+          return ts.visitEachChild(node, functionVisitor, context);
         }
 
         return ts.visitEachChild(node, visitor, context);
