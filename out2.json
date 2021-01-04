@@ -1,32 +1,20 @@
 {
-  ImportedProp: { xyz: 'string' },
-  Props: { test1: 'string', test2: { xyz: 'string' } },
-  TestFunctionsInterface: {
-    getProps: 'typeof getProps',
-    Button: 'typeof import("/home/frank/playground-my-plugin/src/Button").Button'
+  "getProps": {
+    "testx": [
+      "number",
+      "import(\"/home/frank/playground-my-plugin/src/ImportedProp\").ImportedProp",
+      "number[]",
+      "MType"
+    ],
+    "__return__": "{ x: number; y: string; }"
   },
-  Attendee: {
-    id: 'string',
-    status: [ 'beginner', 'experienced', 'pro' ],
-    accessLv: [ 1, 2, 3 ],
-    person: {
-      name: 'string',
-      isUnderage: 'boolean',
-      phoneNumbers: [Array],
-      address: [Object]
+  "Button": {
+    "props": {
+      "test1": "string",
+      "test2": {
+        "xyz": "string"
+      }
     },
-    accompaniedBy: {
-      name: 'string',
-      isUnderage: 'boolean',
-      phoneNumbers: [Array],
-      address: [Object]
-    }
-  },
-  Person: {
-    name: 'string',
-    isUnderage: 'boolean',
-    phoneNumbers: [ 'string' ],
-    address: { city: [Array], country: 'string' }
-  },
-  Address: { city: [ 'string', 'number' ], country: 'string' }
+    "__return__": "JSX.Element"
+  }
 }

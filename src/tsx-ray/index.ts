@@ -3,8 +3,9 @@ import {
   InterfaceDeclaration,
   SourceFile,
   ImportDeclaration,
-  FunctionDeclaration
+  FunctionDeclaration,
 } from "ts-morph";
+import { ParameterDeclaration } from "typescript";
 // eslint-disable-next-line
 import type {
   TypenameToUnresolvedRefsMap,
@@ -59,19 +60,19 @@ export const extractInterfacesFromFile = (filepath: Filepath) => {
     },
   });
   const sourceFile = project.addSourceFileAtPath(filepath);
-  
-  
-  return parseFunctionsFromSourceFile(sourceFile);
-  // return parseInterfacesFromSourceFile(sourceFile);
+
+  const otherInterfaces = parseInterfacesFromSourceFile(sourceFile);
+
+  return parseFunctionsFromSourceFile(sourceFile, otherInterfaces);
+  //  return parseInterfacesFromSourceFile(sourceFile);
 };
 
 /**
  * exclude specific imports from parsing any further
  */
-function importFilter(src: SourceFile) {
+function importFilter(src: SourceFile, array: string[] = []) {
   const path = src.getFilePath();
 
-  const array = ["react", "prop-types", "csstype"];
   const found = array.some(function (entry) {
     const reg = new RegExp(`[\\\\/]${entry}[\\\\/]`);
     return reg.test(path);
@@ -92,7 +93,7 @@ const parseInterfacesFromSourceFile = (
         .map((i) => i.getModuleSpecifierSourceFile())
         .filter(Boolean) as SourceFile[];
       const importedParsedInterfaces = importedSources
-        .filter(importFilter)
+        .filter((src) => importFilter(src))
         .map(parseInterfacesFromSourceFile);
       return importedParsedInterfaces;
     }
@@ -173,36 +174,40 @@ const parseInterfacesFromSourceFile = (
   return allInterfaceDefinitions;
 };
 
-
-
+// let importSelf = true;
 
 const parseFunctionsFromSourceFile = (
-  sourceFile: SourceFile
+  sourceFile: SourceFile,
+  otherInterfaces: InterfaceDefinitions
 ): InterfaceDefinitions => {
   //const interfaces = sourceFile.getInterfaces();
   const imports = sourceFile.getImportDeclarations();
 
-  sourceFile.getFunctions()
+  const functions = sourceFile.getFunctions();
 
-
-// const rFunction=sourceFile.getFunctions()[1]
-// const testReturnType=rFunction.getReturnType()
-// // will be "JSX.Element" our react function
-// const result2= convertToPrimitiveRepresentation(testReturnType)
-// const properties: InterfaceDefinition = {};
-// const testParameterTypes=rFunction.getParameters().forEach(p => properties[p.getName()]=convertToPrimitiveRepresentation(p.getType()))
-
-
-
+  // const rFunction=sourceFile.getFunctions()[1]
+  // const testReturnType=rFunction.getReturnType()
+  // // will be "JSX.Element" our react function
+  // const result2= convertToPrimitiveRepresentation(testReturnType)
+  // const properties: InterfaceDefinition = {};
+  // const testParameterTypes=rFunction.getParameters().forEach(p => properties[p.getName()]=convertToPrimitiveRepresentation(p.getType()))
 
   const getParsedInterfacesFromImports = (imports: ImportDeclaration[]) => {
     if (imports.length > 0) {
       const importedSources = imports
         .map((i) => i.getModuleSpecifierSourceFile())
         .filter(Boolean) as SourceFile[];
+
+      // add this sourcefile to import local stuff
+      // if (importSelf) {
+      //   importSelf = false;
+      //   importedSources.push(sourceFile);
+      // }
       const importedParsedInterfaces = importedSources
-        .filter(importFilter)
-        .map(parseFunctionsFromSourceFile);
+        .filter((src) => importFilter(src, ["prop-types", "csstype"]))
+        .map((sourceFile) =>
+          parseFunctionsFromSourceFile(sourceFile, otherInterfaces)
+        );
       return importedParsedInterfaces;
     }
     return [];
@@ -222,9 +227,19 @@ const parseFunctionsFromSourceFile = (
         )
       : interfaceDefinitions;
 
-  const parseInterfaceProperties = (intf: FunctionDeclaration) => {
+  const parseFunctionInterfaceProperties = (intf: FunctionDeclaration) => {
     const properties: InterfaceDefinition = {};
-    for (const property of intf.getProperties()) {
+
+    const params = intf.getParameters();
+
+    // add partial return type interface
+    const ret = {
+      getName: () => "__return__",
+      getType: () => intf.getReturnType(),
+    };
+    params.push(ret as any);
+
+    for (const property of params) {
       const type = property.getType();
 
       if (type.isArray()) {
@@ -262,25 +277,44 @@ const parseFunctionsFromSourceFile = (
     return properties;
   };
 
-  for (const intf of interfaces) {
-    allInterfaceDefinitions[intf.getName()] = parseInterfaceProperties(intf);
+  for (const intf of functions) {
+    allInterfaceDefinitions[intf.getName()] = parseFunctionInterfaceProperties(
+      intf
+    );
   }
 
+  /**
+   * FIXME props and look for pattern like import(\"/home/frank/playground-my-plugin/src/ImportedProp\").ImportedProp
+   * and replace those with otherInterfaces[ImportedProp]
+   */
+
   for (const unresolvedType of Array.from(unresolvedTypes)) {
-    if (!allInterfaceDefinitions[unresolvedType]) {
-      console.warn(`No definition found for ${unresolvedType}`);
+    let resolved = allInterfaceDefinitions[unresolvedType];
+
+    if (!resolved) {
+      console.warn(
+        `No definition found for ${unresolvedType} attempting backup`
+      );
+
+      if (unresolvedType == "JSX.Element") {
+        // @ts-ignore
+        resolved = "JSX.Element";
+      } else if (!otherInterfaces[unresolvedType]) {
+        console.warn(`No definition found in backup for ${unresolvedType}`);
+      } else {
+        resolved = otherInterfaces[unresolvedType];
+      }
     }
 
     const unresolvedReferences = typeReferences[unresolvedType];
 
     for (const unresolvedPropertyRef of unresolvedReferences) {
       const ref = unresolvedPropertyRef.ref;
-      ref[unresolvedPropertyRef.name] = allInterfaceDefinitions[unresolvedType];
+      ref[unresolvedPropertyRef.name] = resolved;
     }
   }
 
   return allInterfaceDefinitions;
 };
-
 
 export { PrimitiveType, ArrayType, ObjectType, ParsedType, UnionType };
