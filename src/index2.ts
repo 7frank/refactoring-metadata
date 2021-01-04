@@ -1,4 +1,4 @@
-import { extractInterfacesFromFile } from 'tsx-ray';
+import { extractInterfacesFromFile } from './tsx-ray';
 
 const result = extractInterfacesFromFile('src/Button.tsx');
 
