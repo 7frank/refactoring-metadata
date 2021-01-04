@@ -1,3 +1,4 @@
+/*
 {
   "getProps": {
     "testx": [
@@ -18,6 +19,7 @@
     "__return__": "JSX.Element"
   }
 }
+*/
 
 
     /**
