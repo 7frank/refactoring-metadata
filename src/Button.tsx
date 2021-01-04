@@ -1,4 +1,5 @@
 import React from "react";
+import { ImportedProp } from "./ImportedProp";
 
 type MType = { test: number };
 
@@ -7,13 +8,14 @@ const test: string = "hello";
 
 interface Props {
   test1: string;
+  test2?:ImportedProp;
 }
 
 function getProps(testx: number | number[] | MType = 0) {
   return { x: 1, y: "2" };
 }
 
-export function Button(props: Props): MType {
+export function Button(props: Props) {
   //  return {test:3}
   return (
     <>

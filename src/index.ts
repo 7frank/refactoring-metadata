@@ -3,7 +3,8 @@
 
 import { myTransformFactory } from "./myTransform";
 import type { PlaygroundPlugin, PluginUtils } from "./vendor/playground";
-import { extractInterfacesFromFile } from 'tsx-ray';
+ import { extractInterfacesFromFile } from './tsx-ray';
+
 
 
 
@@ -45,70 +46,11 @@ const makePlugin = (utils: PluginUtils) => {
         let sourceFile = program.getSourceFile(sandbox.filepath);
         let options = sandbox.getCompilerOptions();
 
-        // create compiler host, program, and then emit the results
-        // using our transform
-        //const compilerHost = ts.createCompilerHost({})
-        //const program = ts.createProgram([entryModule], compilerOptions, compilerHost)
-        const msgs = {};
+       
+        // const result = extractInterfacesFromFile(sandbox.filepath);
+        
+        // console.log(result);
 
-        const types = [];
-        function foundTypes(node: any, info?: string) {
-          try {
-            console.log("");
-            info && console.log(info);
-
-            const type = program.getTypeChecker().getTypeAtLocation(node);
-
-            types.push(type);
-
-            window["types"] = types;
-
-            console.log("node", node);
-
-            let typeSignature = sandbox.ts
-              .displayPartsToString(
-                // @ts-ignore
-                sandbox.ts.typeToDisplayParts(checker, type, node)
-              )
-              .replace(/\s+/g, " ");
-            console.log("typeSignature", typeSignature);
-
-            // Full name
-            // const sym=type.getSymbol()
-            // console.log(
-            //   `Name: ${checker.getFullyQualifiedName(sym)}  ${sym.escapedName}`
-            // );
-            // Get the declarations (can be multiple), and print them
-            console.log(`Declarations: `);
-            type
-              .getSymbol()
-              .getDeclarations()
-              .forEach((d) => console.log(d.getText()));
-          } catch (e) {}
-
-          //const signatures = checker.getSignaturesOfType(type);
-          //console.log("signatures",signatures)
-          // @ts-ignore
-          // let typeSignature2 = sandbox.ts.displayPartsToString(sandbox.ts.signatureToDisplayParts(checker, signatures,node)).replace(/\s+/g, ' ');
-          // console.log("typeSignature2",typeSignature2)
-        }
-
-        const emitResult = program.emit(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          {
-            before: [myTransformFactory(sandbox.ts, foundTypes)],
-          }
-        );
-
-        console.log(msgs);
-        // sandbox.setText(
-        //   sandbox.getText() + JSON.stringify(msgs, null, "  ")
-        //   // +
-        //   // JSON.stringify(types, null, "  ")
-        // );
       };
     },
 
