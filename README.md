@@ -1,6 +1,6 @@
 ## TypeScript Playground Plugin
 
-My new plugin for the TypeScript playground.
+plugin to testthe capabilitiesof ts morphto parse roject for functions (react|utility) and generate testorother useful meta data 
 
 ## Running this plugin
 
