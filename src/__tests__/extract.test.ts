@@ -20,10 +20,13 @@ sourceFile.saveSync();
 
 describe("extract a basic interface", () => {
   const result = extractInterfaces(sourceFile);
-  const x = JSON.stringify(result, null, "  ");
-  console.log(x);
 
   it("is delicious", () => {
-    expect(1).toBeTruthy();
+    expect(result).toEqual({
+      Address: {
+        city: ["string", "number"],
+        country: "string",
+      },
+    });
   });
 });
