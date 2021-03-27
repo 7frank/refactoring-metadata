@@ -1,4 +1,4 @@
-import { extractInterfacesFromFile } from "./tsx-ray";
+import { extractInterfacesFromFile } from "tsx-ray";
 var traverse = require("traverse");
 const result = extractInterfacesFromFile("src/Button.tsx");
 console.log("/*");
@@ -6,7 +6,7 @@ console.log(JSON.stringify(result, null, "  "));
 console.log("*/");
 
 Object.entries(result).forEach(([name, element]) => {
-  const { __return__, ...props } = element;
+  const { __return__, ...props } = element as any;
 
   /**
    * TODO do't traverse initially as our type might be an array of types via "|" where we'd have to pick one

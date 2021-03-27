@@ -1,6 +1,6 @@
 ## TypeScript Playground Plugin
 
-plugin to testthe capabilitiesof ts morphto parse roject for functions (react|utility) and generate testorother useful meta data 
+plugin to test the capabilities of ts-morph/ts-xray to parse a project for functions (react|utility) and generate useful meta data (like tests) 
 
 ## Running this plugin
 
