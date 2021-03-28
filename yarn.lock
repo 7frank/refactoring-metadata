@@ -2128,6 +2128,7 @@ jest-worker@^26.6.2:
 jest@^26.6.3:
   version "26.6.3"
   resolved "https://registry.yarnpkg.com/jest/-/jest-26.6.3.tgz#40e8fdbe48f00dfa1f0ce8121ca74b88ac9148ef"
+  integrity sha512-lGS5PXGAzR4RF7V5+XObhqz2KZIDUA1yD0DG6pBVmy10eh0ZIXQImRuzocsI/N2XZ1GrLFwTS27In2i2jlpq1Q==
   dependencies:
     "@jest/core" "^26.6.3"
     import-local "^3.0.2"
@@ -2212,6 +2213,11 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jsonic@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/jsonic/-/jsonic-1.0.1.tgz#817054df7abfaf525ecf39d6647a2ed6d5fca7f1"
+  integrity sha512-6GitEN4plTuB/I1o9kDZl7Pgc+DvFG1BG88IqaUz4eQglCA1uAgxWdXhLNA6ffaYsmzPjOysDpp6CYTwRiuXLw==
 
 jsprim@^1.2.2:
   version "1.4.1"
