@@ -1,5 +1,5 @@
-import { Type } from 'ts-morph';
-import { PrimitiveType } from './types';
+import { Type } from "ts-morph";
+import { PrimitiveType } from "./types";
 
 export const prettyPrint = (obj: object) => JSON.stringify(obj, null, 2);
 
@@ -16,7 +16,7 @@ export const removeQuotesIfLiteral = (type: Type) => {
 };
 
 export const isImport = (text: string) => {
-  return text.includes('import');
+  return text.includes("import");
 };
 
 export const getNameFromType = (type: Type) => {
@@ -28,15 +28,15 @@ export const convertToPrimitiveRepresentation = (
 ): PrimitiveType | boolean | string => {
   const text = type.getText();
   switch (text) {
-    case 'string':
+    case "string":
       return PrimitiveType.String;
-    case 'number':
+    case "number":
       return PrimitiveType.Number;
-    case 'boolean':
+    case "boolean":
       return PrimitiveType.Boolean;
-    case 'true':
+    case "true":
       return true;
-    case 'false':
+    case "false":
       return false;
     default:
       return text;
@@ -46,11 +46,11 @@ export const convertToPrimitiveRepresentation = (
 export const convertToArrayRepresentation = (type: Type): [PrimitiveType] => {
   const text = type.getText();
   switch (text) {
-    case 'string':
+    case "string":
       return [PrimitiveType.String];
-    case 'number':
+    case "number":
       return [PrimitiveType.Number];
-    case 'boolean':
+    case "boolean":
       return [PrimitiveType.Boolean];
     default:
       return [PrimitiveType.Nothing];

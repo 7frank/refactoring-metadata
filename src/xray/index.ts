@@ -3,15 +3,21 @@ import {
   InterfaceDeclaration,
   SourceFile,
   ImportDeclaration,
-} from 'ts-morph';
+} from "ts-morph";
 // eslint-disable-next-line
 import type {
   TypenameToUnresolvedRefsMap,
   InterfaceDefinitions,
   InterfaceDefinition,
   Filepath,
-} from './types';
-import { PrimitiveType, ArrayType, ParsedType, UnionType, ObjectType } from './types';
+} from "./types";
+import {
+  PrimitiveType,
+  ArrayType,
+  ParsedType,
+  UnionType,
+  ObjectType,
+} from "./types";
 import {
   merge,
   isImport,
@@ -19,7 +25,7 @@ import {
   convertToArrayRepresentation,
   convertToPrimitiveRepresentation,
   removeQuotesIfLiteral,
-} from './utils';
+} from "./utils";
 
 export const compileFile = (filepath: Filepath, outDir: string) => {
   const project = new Project({
@@ -48,7 +54,7 @@ export const getDefaultImports = (sourceFile: SourceFile) => {
 export const extractInterfacesFromFile = (filepath: Filepath) => {
   const project = new Project({
     compilerOptions: {
-      jsx: 2
+      jsx: 2,
     },
   });
   const sourceFile = project.addSourceFileAtPath(filepath);
@@ -100,10 +106,9 @@ const parseInterfacesFromSourceFile = (
       } else if (type.isBoolean()) {
         properties[property.getName()] = convertToPrimitiveRepresentation(type);
       } else if (type.isUnion()) {
-      
         const unionTypes = type
           .getUnionTypes()
-          .map(removeQuotesIfLiteral) as PrimitiveType[]
+          .map(removeQuotesIfLiteral) as PrimitiveType[];
 
         properties[property.getName()] = unionTypes;
       } else if (type.isInterface()) {

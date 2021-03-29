@@ -1,6 +1,3 @@
-
-export 
-interface ImportedProp{
- xyz:string;
-
+export interface ImportedProp {
+  xyz: string;
 }

@@ -1,19 +1,19 @@
-import { Type } from 'ts-morph';
+import { Type } from "ts-morph";
 
 export type Filepath = string;
 
 export enum PrimitiveType {
-  String = 'string',
-  Boolean = 'boolean',
-  Number = 'number',
-  Nothing = 'nothing',
+  String = "string",
+  Boolean = "boolean",
+  Number = "number",
+  Nothing = "nothing",
 }
 
 export enum ArrayType {
-  String = 'string[]',
-  Number = 'number[]',
-  Boolean = 'boolean[]',
-  Nothing = 'nothing',
+  String = "string[]",
+  Number = "number[]",
+  Boolean = "boolean[]",
+  Nothing = "nothing",
 }
 
 export type ObjectType = Record<string, any>;
@@ -45,7 +45,7 @@ export type InterfaceProperty =
   | UnionType<PrimitiveType>
   | InterfaceDefinition
   | boolean
-  | ReturnType<Type['getText']>;
+  | ReturnType<Type["getText"]>;
 
 export interface InterfaceDefinition {
   [key: string]: InterfaceProperty;
