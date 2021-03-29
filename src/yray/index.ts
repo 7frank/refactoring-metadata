@@ -1,8 +1,8 @@
 import {
-    SourceFile,
-    ImportDeclaration,
-    FunctionDeclaration,
-  } from "ts-morph";
+  SourceFile,
+  ImportDeclaration,
+  FunctionDeclaration,
+} from 'ts-morph';
   // eslint-disable-next-line
   import type {
     TypenameToUnresolvedRefsMap,
@@ -28,7 +28,7 @@ import {
 
   extractInterfaces
 } from "../xray/index";
-  
+
 
   
   export const extractFunctionsFromFile = (sourceFile:SourceFile) => {
@@ -193,3 +193,7 @@ import {
   
     return allInterfaceDefinitions;
   };
+function parseInterfacesFromSourceFile(sourceFile: any) {
+    throw new Error('Function not implemented.');
+}
+

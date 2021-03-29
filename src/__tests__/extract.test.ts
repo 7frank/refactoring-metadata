@@ -1,6 +1,7 @@
 import {Project} from 'ts-morph';
 import {extractInterfaces} from '../xray'
 import {extractFunctionsFromFile} from '../yray';
+import {loadFile} from '../generator/utils';
 
 function getFile(src, data: string) {
     const project = new Project({useInMemoryFileSystem: true});
@@ -58,4 +59,31 @@ describe('extract type of function', () => {
         });
     });
 });
-  
+
+
+
+
+describe('extract type of function of file', () => {
+
+
+    //  Note run ts-node src/index2 with below code enabled
+
+const src='src/fixtures/Button.tsx'
+    const result = extractFunctionsFromFile(loadFile(src));
+
+    // console.log('/*');
+    // console.log(JSON.stringify(result, null, '  '));
+    // console.log('*/');
+    //
+    // Object.entries(result).forEach(([name, element]) => {
+    //     createSimpleTests(element, name);
+    //
+    // });
+    //
+    it('does so', () => {
+        expect(result).toMatchSnapshot();
+    });
+});
+
+
+

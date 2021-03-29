@@ -1,7 +1,8 @@
 import *  as ts from 'typescript';
 import * as path from 'path'
-import {extractFunctionsFromFile} from '../yray';
-import type {InterfaceDefinition} from 'tsx-ray/dist/types';
+import type {InterfaceDefinition} from '../xray/types';
+import {Project} from 'ts-morph';
+
 var jsonic = require('jsonic')
 
 var traverse = require('traverse');
@@ -26,27 +27,22 @@ var traverse = require('traverse');
  */
 
 
-// //  Note run ts-node src/index2 with belowcode enabled
-// const src = 'src/addHelper.ts'
-// //const src='src/Button.tsx'
-// const result = extractFunctionsFromFile(src);
-//
-// console.log('/*');
-// console.log(JSON.stringify(result, null, '  '));
-// console.log('*/');
-//
-// Object.entries(result).forEach(([name, element]) => {
-//     createSimpleTests(element, name);
-//
-// });
 
+export function loadFile(filepath: string, project?: Project) {
 
+    project = project ?? new Project({
+        compilerOptions: {
+            jsx: 2
+        },
+    });
+    return project.addSourceFileAtPath(filepath);
 
+}
 
 /**
  * this is a really rough draft of things we might wanna do
  */
-function createSimpleTests(element:InterfaceDefinition, name) {
+function createSimpleTests(element: InterfaceDefinition, name) {
     const {__return__, ...props} = element as any;
 
     /**
@@ -76,8 +72,6 @@ function createSimpleTests(element:InterfaceDefinition, name) {
     }
 }
 
-
-
 function extractDummyPath(src) {
     const f = path.basename(src)
 
@@ -106,8 +100,6 @@ function createDummyProps(props) {
     });
     return dummyProps
 }
-
-
 
 function createDummyParams(props) {
 
