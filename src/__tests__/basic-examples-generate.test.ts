@@ -3,8 +3,8 @@ import { createSimpleTests, loadFile } from "../generator/utils";
 
 require("jest-specific-snapshot");
 
-describe("simple test generator", () => {
-  const src = "src/fixtures/Button.tsx";
+describe("basic examples test generator", () => {
+  const src = "src/fixtures/basic-examples.tsx";
   const sourcefile = loadFile(src);
   const result = extractFunctionsFromFile(sourcefile);
 
@@ -22,11 +22,11 @@ describe("simple test generator", () => {
         expect(
           e.message + "\n\n" + sourcefile.getFullText()
         ).toMatchSpecificSnapshot(
-          "./__snapshots__/Button.tsx/" + name + ".snap"
+          "./__snapshots__/basic-examples.tsx/" + name + ".snap"
         );
       });
       expect(resultingUnitTestCode).toMatchSpecificSnapshot(
-        "./__snapshots__/Button.tsx/" + name + ".snap"
+        "./__snapshots__/basic-examples.tsx/" + name + ".snap"
       );
     }
   });

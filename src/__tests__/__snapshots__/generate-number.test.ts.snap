@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`inc test generator generates interface definitions: json interface payload 1`] = `
+Object {
+  "inc": Object {
+    "__return__": "number",
+    "val": "number",
+  },
+}
+`;

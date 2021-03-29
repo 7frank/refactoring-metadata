@@ -1,17 +1,6 @@
-import { Project } from "ts-morph";
 import { extractInterfaces } from "../xray";
 import { extractFunctionsFromFile } from "../yray";
-
-function getFile(src, data: string) {
-  const project = new Project({ useInMemoryFileSystem: true });
-  //  const fs = project.getFileSystem();
-
-  const sourceFile = project.createSourceFile(src, data);
-  project.addDirectoryAtPathIfExists("../fixtures");
-
-  sourceFile.saveSync();
-  return sourceFile;
-}
+import { getFile } from "../generator/getFile";
 
 describe("extract a basic interface", () => {
   const sourceFile = getFile(

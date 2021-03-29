@@ -1,12 +1,22 @@
 import { extractFunctionsFromFile } from "../yray";
 import { createSimpleTests, loadFile } from "../generator/utils";
+import { getFile } from "../generator/getFile";
 
 require("jest-specific-snapshot");
 
-describe("simple test generator", () => {
-  const src = "src/fixtures/Button.tsx";
-  const sourcefile = loadFile(src);
-  const result = extractFunctionsFromFile(sourcefile);
+describe("inc test generator", () => {
+  const src = ""; //no path available
+
+  const sourceFile = getFile(
+    "file.ts",
+    `
+  export function inc(val: number) {
+    return val++;
+  }
+`
+  );
+
+  const result = extractFunctionsFromFile(sourceFile);
 
   it("generates interface definitions", async () => {
     expect(result).toMatchSnapshot("json interface payload");
@@ -20,13 +30,13 @@ describe("simple test generator", () => {
         src
       ).catch((e) => {
         expect(
-          e.message + "\n\n" + sourcefile.getFullText()
+          e.message + "\n\n" + sourceFile.getFullText()
         ).toMatchSpecificSnapshot(
-          "./__snapshots__/Button.tsx/" + name + ".snap"
+          "./__snapshots__/mem-inc.ts/" + name + ".snap"
         );
       });
       expect(resultingUnitTestCode).toMatchSpecificSnapshot(
-        "./__snapshots__/Button.tsx/" + name + ".snap"
+        "./__snapshots__/mem-inc.ts/" + name + ".snap"
       );
     }
   });

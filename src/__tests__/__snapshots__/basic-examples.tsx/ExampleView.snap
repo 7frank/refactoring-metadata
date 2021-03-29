@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic examples test generator creates test naive cases 1`] = `
+"
+
+    /**
+     * test for ExampleView
+     */
+  import {ExampleView}  from './Button.tsx'
+    
+
+    it('renders correctly', () => {
+       // arrange
+       const randomTestProps={ a, b, c, d, e } = {\\"ExampleViewProps\\"}
+   
+       // act
+        const tree = renderer
+          .create(<ExampleView {...randomTestProps} ></ExampleView>)
+          .toJSON();
+        
+        // assert
+        expect(tree).toMatchSnapshot();
+      });
+    "
+`;

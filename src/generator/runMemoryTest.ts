@@ -13,7 +13,13 @@ export async function runMemoryTest(source: string) {
     const testResult = eval(result.outputText);
     return JSON.stringify(testResult, null, "  ");
   } catch (e) {
-    const E = new Error("Error on evaluating:" + e.message);
+    const E = new Error(
+      "Error on evaluating:" +
+        e.message +
+        "\n\n Javascript:" +
+        result.outputText +
+        "\n\n"
+    );
     E.stack = e.stack;
     throw E;
   }

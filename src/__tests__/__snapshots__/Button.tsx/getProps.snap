@@ -3,6 +3,23 @@
 exports[`simple test generator creates test naive cases 1`] = `
 "Error on evaluating:Cannot find module './Button' from 'src/generator/runMemoryTest.ts'
 
+ Javascript:\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+var Button_1 = require(\\"./Button\\");
+var randomTestProps = [[
+        0.9052475816336711,
+        [
+            0.18712273197061613,
+            0.22633015441836002
+        ],
+        \\"import(\\\\\\"/home/frank/refactoring-metadata/src/fixtures/ImportedProp\\\\\\").ImportedProp\\",
+        \\"MType\\"
+    ]];
+Button_1.getProps.apply(void 0, randomTestProps);
+
+
+
+
 import React from \\"react\\";
 import { ImportedProp } from \\"./ImportedProp\\";
 

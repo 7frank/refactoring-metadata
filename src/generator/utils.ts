@@ -71,7 +71,7 @@ export async function createSimpleTests(
 
     return createUnitTest({
       name,
-      path: "",
+      path: "../fixtures/", // TODO use proper paths
       props: dummyProps,
       returnValue,
     });
@@ -177,7 +177,7 @@ function createUnitTest({
     /**
      * test for ${cName}
      */
-  import {${cName}}  from './Button.tsx'
+  import {${cName}}  from '${path}Button.tsx'
     
 
     it('renders correctly', () => {

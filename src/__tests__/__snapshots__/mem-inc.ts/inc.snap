@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`inc test generator creates test naive cases 1`] = `
+"Expected \\":\\" but \\"}\\" found.
+
+
+  export function inc(val: number) {
+    return val++;
+  }
+"
+`;
+
+exports[`inc test generator creates test naive cases 2`] = `undefined`;

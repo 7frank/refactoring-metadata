@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic examples test generator generates interface definitions: json interface payload 1`] = `
+Object {
+  "ExampleView": Object {
+    "__return__": "JSX.Element",
+    "{ a, b, c, d, e }": "ExampleViewProps",
+  },
+  "execCallback": Object {
+    "__return__": "string",
+    "cb": "() => string",
+  },
+  "helloName": Object {
+    "__return__": "string",
+    "name": "string",
+  },
+  "inc": Object {
+    "__return__": "number",
+    "val": "number",
+  },
+  "optional": Object {
+    "__return__": Array [
+      "yes",
+      0,
+    ],
+    "val": "string",
+  },
+}
+`;

@@ -24,6 +24,7 @@
     "@types/jest-specific-snapshot": "^0.5.5",
     "debug": "^4.3.1",
     "jest": "^26.6.3",
+    "jest-chance": "^0.1.8",
     "jest-specific-snapshot": "^4.0.0",
     "jsonic": "^1.0.1",
     "prettier": "^2.2.1",
