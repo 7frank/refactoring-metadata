@@ -1,6 +1,6 @@
 import *  as ts from 'typescript';
 import * as path from 'path'
-import {extractFunctionsFromFile} from './yray';
+import {extractFunctionsFromFile} from '../yray';
 import type {InterfaceDefinition} from 'tsx-ray/dist/types';
 var jsonic = require('jsonic')
 
@@ -8,7 +8,7 @@ var traverse = require('traverse');
 
 /**
  * Note run ts-node src/index2
- * TODO createseparate package with unit tests for cases
+ * TODO create separate package with unit tests for cases
  * initial setup: parse file
  *
  *  1 write tests that extract jsx function
