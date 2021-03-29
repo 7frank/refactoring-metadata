@@ -19,6 +19,10 @@ import {
 
 import { extractInterfaces } from "../xray/index";
 
+var debug = require("debug")("yray");
+
+if (process.env.NODE_ENV == "testing") debug.disable();
+
 export const extractFunctionsFromFile = (sourceFile: SourceFile) => {
   const otherInterfaces = extractInterfaces(sourceFile);
   return parseFunctionsFromSourceFile(sourceFile, otherInterfaces);
@@ -156,15 +160,13 @@ const parseFunctionsFromSourceFile = (
     let resolved = allInterfaceDefinitions[unresolvedType];
 
     if (!resolved) {
-      console.warn(
-        `No definition found for ${unresolvedType} attempting backup`
-      );
+      debug(`No definition found for ${unresolvedType} attempting backup`);
 
       if (unresolvedType == "JSX.Element") {
         // @ts-ignore
         resolved = "JSX.Element";
       } else if (!otherInterfaces[unresolvedType]) {
-        console.warn(`No definition found in backup for ${unresolvedType}`);
+        debug(`No definition found in backup for ${unresolvedType}`);
       } else {
         resolved = otherInterfaces[unresolvedType];
       }
@@ -180,6 +182,3 @@ const parseFunctionsFromSourceFile = (
 
   return allInterfaceDefinitions;
 };
-function parseInterfacesFromSourceFile(sourceFile: any) {
-  throw new Error("Function not implemented.");
-}

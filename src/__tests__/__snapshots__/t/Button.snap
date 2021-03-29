@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`simple test generator creates test naive cases 1`] = `
+"
+
+    /**
+     * test for Button
+     */
+  import {Button}  from './Button.tsx'
+    
+
+    it('renders correctly', () => {
+       // arrange
+       const randomTestProps=props = {{
+  \\"test1\\": \\"randomString\\",
+  \\"test2\\": {
+    \\"xyz\\": \\"randomString\\"
+  }
+}}
+   
+       // act
+        const tree = renderer
+          .create(<Button {...randomTestProps} ></Button>)
+          .toJSON();
+        
+        // assert
+        expect(tree).toMatchSnapshot();
+      });
+    "
+`;

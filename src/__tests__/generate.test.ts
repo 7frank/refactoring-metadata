@@ -1,17 +1,31 @@
 import { extractFunctionsFromFile } from "../yray";
 import { createSimpleTests, loadFile } from "../generator/utils";
 
-describe("extract type of function of file", () => {
+require("jest-specific-snapshot");
+
+describe("simple test generator", () => {
   const src = "src/fixtures/Button.tsx";
-  const result = extractFunctionsFromFile(loadFile(src));
+  const sourcefile = loadFile(src);
+  const result = extractFunctionsFromFile(sourcefile);
 
-  it("does so & creates simple test cases", () => {
-    expect(result).toMatchSnapshot("json interface 3payload");
+  it("generates interface definitions", async () => {
+    expect(result).toMatchSnapshot("json interface payload");
+  });
 
-    Object.entries(result).forEach(([name, element]) => {
-      const resultingUnitTestCode = createSimpleTests(element, name, src);
-
-      expect(resultingUnitTestCode).toMatchSnapshot(name);
-    });
+  it("creates test naive cases", async () => {
+    for await (const [name, element] of Object.entries(result)) {
+      const resultingUnitTestCode = await createSimpleTests(
+        element,
+        name,
+        src
+      ).catch((e) => {
+        expect(
+          e.message + "\n\n" + sourcefile.getFullText()
+        ).toMatchSpecificSnapshot("./__snapshots__/t/" + name + ".snap");
+      });
+      expect(resultingUnitTestCode).toMatchSpecificSnapshot(
+        "./__snapshots__/t/" + name + ".snap"
+      );
+    }
   });
 });

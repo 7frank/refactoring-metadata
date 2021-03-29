@@ -1,7 +1,7 @@
-import * as ts from "typescript";
 import * as path from "path";
 import type { InterfaceDefinition } from "../xray/types";
 import { Project } from "ts-morph";
+import { runMemoryTest } from "../generator/runMemoryTest";
 
 var jsonic = require("jsonic");
 
@@ -40,7 +40,7 @@ export function loadFile(filepath: string, project?: Project) {
 /**
  * this is a really rough draft of things we might wanna do
  */
-export function createSimpleTests(
+export async function createSimpleTests(
   element: InterfaceDefinition,
   name: string,
   src: string
@@ -66,7 +66,8 @@ export function createSimpleTests(
       path: extractDummyPath(src),
       params: createDummyParams(props),
     });
-    runMemoryTest(test);
+
+    await runMemoryTest(test);
 
     return createUnitTest({
       name,
@@ -214,33 +215,4 @@ function createRandomFunctionCall({
    ${cName}(...randomTestProps)
       
 `;
-}
-
-/**
- * we probably ned to run a whole compilation of complex sources in a memory or ramdisk file system
- * @param source
- */
-async function runMemoryTest(source: string) {
-  //  const source = 'let x: string  = \'string\'';
-
-  let result = ts.transpileModule(source, {
-    compilerOptions: { module: ts.ModuleKind.CommonJS },
-  });
-
-  console.log("/------------------------------------/");
-  console.log(source);
-  console.log("/------------------------------------/");
-  console.log(JSON.stringify(result));
-  console.log("/------------------------------------/");
-  console.log(result.outputText);
-  console.log("/------------------------------------/");
-  try {
-    const testResult = eval(result.outputText);
-    console.log("testResult:");
-    console.log(JSON.stringify(testResult));
-  } catch (e) {
-    console.log("Error on Eval", e);
-  }
-
-  console.log("/------------------------------------/");
 }
