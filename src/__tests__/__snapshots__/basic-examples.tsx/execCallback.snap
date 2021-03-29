@@ -1,7 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`basic examples test generator creates test naive cases 1`] = `
-"Expected \\":\\" but \\"}\\" found.
+"Error on evaluating:cb is not a function
+
+ Javascript:\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+var basic_examples_1 = require(\\"./../fixtures/basic-examples\\");
+var randomTestProps = [\\"() => string\\"];
+basic_examples_1.execCallback.apply(void 0, randomTestProps);
+
+
+
 
 import React from \\"react\\";
 

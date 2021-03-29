@@ -1,7 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`inc test generator creates test naive cases 1`] = `
-"Expected \\":\\" but \\"}\\" found.
+"Error on evaluating:Cannot find module './../fixtures/' from 'src/generator/runMemoryTest.ts'
+
+ Javascript:\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+var fixtures_1 = require(\\"./../fixtures/\\");
+var randomTestProps = [0.8159137163454231];
+fixtures_1.inc.apply(void 0, randomTestProps);
+
+
+
 
 
   export function inc(val: number) {

@@ -1,76 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`basic examples test generator creates test naive cases 1`] = `
-"Error on evaluating:Cannot find module './basic-examples' from 'src/generator/runMemoryTest.ts'
-
- Javascript:\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-var basic_examples_1 = require(\\"./basic-examples\\");
-var randomTestProps = [\\"randomString\\"];
-basic_examples_1.optional.apply(void 0, randomTestProps);
-
-
-
-
-import React from \\"react\\";
-
-/*********************************************************************************************************
- * This file contains some reaaally basic functions
- * of which the tests will generate itself unit tests for
- *
- * TODO we should create separate unit tests for each edge case later on
- *********************************************************************************************************/
-
-/**
- * increment value by one
- */
-export function inc(val: number) {
-  return val++;
-}
-
-/**
- * hello name example
-
- */
-export function helloName(name: string) {
-  return \`hello, \${name}\`;
-}
-
-/**
- * function containing optional value with dependent return type
- * FIXME yray will return wrong values here
- */
-export function optional(val?: string) {
-  return val ? \\"yes\\" : 0;
-}
-
-/**
- * TODO decide how to handle functions. (1) do we want to mock them or (2) use jest-chance to generate example data
- * @param cb
- */
-export function execCallback(cb: () => string) {
-  return \`callback result:\${cb()}\`;
-}
-
-type ExampleViewProps = {
-  a: string;
-  b: number;
-  c: (x: string) => boolean;
-  d: boolean;
-  e: \\"A\\" | \\"B\\" | \\"C\\";
-};
-
-export function ExampleView({ a, b, c, d, e }: ExampleViewProps) {
-  return (
-    <>
-      {b}
-      {c(a)}
-      {d}
-      {e}
-    </>
-  );
-}
 "
-`;
 
-exports[`basic examples test generator creates test naive cases 2`] = `undefined`;
+    /**
+     * test for optional
+     */
+  import {optional}  from '../fixtures/Button.tsx'
+    
+
+    it('renders correctly', () => {
+       // arrange
+       const randomTestProps=val = {\\"string\\"}
+   
+       // act
+      const result= optional(randomTestProps)
+        
+        // assert
+        expect(result).toBeEqual(0 = {\\"yes\\"} 1 = {0});
+      });
+    "
+`;

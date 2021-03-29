@@ -59,11 +59,18 @@ export async function createSimpleTests(
   } else if (__return__ != "JSX.Element") {
     // TODO random values obviously will fail BUT we actually can compile the file
     //  and its dependencies and run it with random input and
-    const returnValue = createDummyProps(jsonic(__return__ as string));
+
+    let jsonReturn;
+    try {
+      jsonReturn = jsonic(__return__ as string);
+    } catch (e) {
+      jsonReturn = __return__;
+    }
+    const returnValue = createDummyProps(jsonReturn);
 
     const test = createRandomFunctionCall({
       name,
-      path: extractDummyPath(src),
+      path: "../fixtures/" + extractDummyPath(src),
       params: createDummyParams(props),
     });
 
@@ -84,7 +91,14 @@ function extractDummyPath(src) {
   return f.split(".").slice(0, -1).join(".");
 }
 
-function createDummyProps(props) {
+function createDummyProps(props: string | object) {
+  // fallback in case propsis a string
+  if (typeof props != "object") {
+    if (props == "number") return ["" + Math.random()];
+    if (props == "string") return [`"randomString"${Math.random()}`];
+    if (props == "boolean") return ["" + (Math.random() < 0.5)];
+  }
+
   const dummyProps = Object.entries(props).map(([name, prop]) => {
     traverse(prop).forEach(function (x) {
       if (!this.isLeaf) return;
@@ -93,7 +107,7 @@ function createDummyProps(props) {
 
       if (key == "number") this.update(Math.random());
       if (key == "string") this.update("randomString");
-      if (this.node == "boolean") this.update(true);
+      if (key == "boolean") this.update(true);
 
       if (key == "number[]") this.update([Math.random(), Math.random()]);
       if (key == "string[]") this.update(["'randomString'", "'randomStrin2'"]);

@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`simple test generator creates test naive cases 1`] = `
-"Error on evaluating:Cannot find module './Button' from 'src/generator/runMemoryTest.ts'
+"Error on evaluating:Cannot read property 'apply' of undefined
 
  Javascript:\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-var Button_1 = require(\\"./Button\\");
+var Button_1 = require(\\"./../fixtures/Button\\");
 var randomTestProps = [[
-        0.9052475816336711,
+        0.6093182859439135,
         [
-            0.18712273197061613,
-            0.22633015441836002
+            0.9519178729654283,
+            0.1437511800331721
         ],
         \\"import(\\\\\\"/home/frank/refactoring-metadata/src/fixtures/ImportedProp\\\\\\").ImportedProp\\",
         \\"MType\\"
