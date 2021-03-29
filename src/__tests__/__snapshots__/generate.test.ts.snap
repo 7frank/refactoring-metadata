@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extract type of function of file does so & creates simple test cases: Button 1`] = `
+"
+
+    /**
+     * test for Button
+     */
+  import {Button}  from './Button.tsx'
+    
+
+    it('renders correctly', () => {
+       // arrange
+       const randomTestProps=props = {{
+  \\"test1\\": \\"randomString\\",
+  \\"test2\\": {
+    \\"xyz\\": \\"randomString\\"
+  }
+}}
+   
+       // act
+        const tree = renderer
+          .create(<Button {...randomTestProps} ></Button>)
+          .toJSON();
+        
+        // assert
+        expect(tree).toMatchSnapshot();
+      });
+    "
+`;
+
+exports[`extract type of function of file does so & creates simple test cases: getProps 1`] = `
+"
+
+    /**
+     * test for getProps
+     */
+  import {getProps}  from './Button.tsx'
+    
+
+    it('renders correctly', () => {
+       // arrange
+       const randomTestProps=testx = {[
+  0.21214333702928223,
+  [
+    0.009178232125447439,
+    0.874483099106345
+  ],
+  \\"import(\\\\\\"/home/frank/refactoring-metadata/src/fixtures/ImportedProp\\\\\\").ImportedProp\\",
+  \\"MType\\"
+]}
+   
+       // act
+      const result= getProps(randomTestProps)
+        
+        // assert
+        expect(result).toBeEqual(x = {\\"number; y: string;\\"});
+      });
+    "
+`;
+
+exports[`extract type of function of file does so & creates simple test cases: json interface 3payload 1`] = `
+Object {
+  "Button": Object {
+    "__return__": "JSX.Element",
+    "props": Object {
+      "test1": "string",
+      "test2": Object {
+        "xyz": "string",
+      },
+    },
+  },
+  "getProps": Object {
+    "__return__": "{ x: number; y: string; }",
+    "testx": Array [
+      "number",
+      "number[]",
+      "import(\\"/home/frank/refactoring-metadata/src/fixtures/ImportedProp\\").ImportedProp",
+      "MType",
+    ],
+  },
+}
+`;

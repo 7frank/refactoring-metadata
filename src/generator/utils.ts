@@ -40,7 +40,7 @@ export function loadFile(filepath: string, project?: Project) {
 /**
  * this is a really rough draft of things we might wanna do
  */
-function createSimpleTests(
+export function createSimpleTests(
   element: InterfaceDefinition,
   name: string,
   src: string
@@ -55,11 +55,8 @@ function createSimpleTests(
 
   // todo run prettier before out
   if (__return__ == "JSX.Element") {
-    let out = createReactTest({ name, path: "", props: dummyProps });
-
-    console.log(out);
+    return createReactTest({ name, path: "", props: dummyProps });
   } else if (__return__ != "JSX.Element") {
-    console.log("__return__", __return__);
     // TODO random values obviously will fail BUT we actually can compile the file
     //  and its dependencies and run it with random input and
     const returnValue = createDummyProps(jsonic(__return__ as string));
@@ -71,13 +68,12 @@ function createSimpleTests(
     });
     runMemoryTest(test);
 
-    let out = createUnitTest({
+    return createUnitTest({
       name,
       path: "",
       props: dummyProps,
       returnValue,
     });
-    console.log(out);
   }
 }
 
